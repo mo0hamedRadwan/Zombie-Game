@@ -13,9 +13,9 @@ const midX = canvas.width / 2;
 const midY = canvas.height / 2;
 context = canvas.getContext("2d");
 
-const backgroundSound = createAudio("/audio/backgroundSound.mp3");
-const shoot = createAudio("/audio/shot-and-reload.mp3");
-const killingZombie = createAudio("/audio/killed_zombie.mp3");
+const backgroundSound = createAudio("audio/backgroundSound.mp3");
+const shoot = createAudio("audio/shot-and-reload.mp3");
+const killingZombie = createAudio("audio/killed_zombie.mp3");
 let muted = false;
 
 class Player {
@@ -29,25 +29,25 @@ class Player {
         this.sprite = {
             stand: {
                 spriteNum: 1,
-                image: createImage("/img/playerSpriteIdle.png"),
+                image: createImage("img/playerSpriteIdle.png"),
                 cropWidth: 313,
                 height: 207,
             },
             move: {
                 spriteNum: 2,
-                image: createImage("/img/playerSpriteMove.png"),
+                image: createImage("img/playerSpriteMove.png"),
                 cropWidth: 313,
                 height: 206,
             },
             reload: {
                 spriteNum: 3,
-                image: createImage("/img/playerSpriteReload.png"),
+                image: createImage("img/playerSpriteReload.png"),
                 cropWidth: 322,
                 height: 217,
             },
             shoot: {
                 spriteNum: 4,
-                image: createImage("/img/playerSpriteShoot.png"),
+                image: createImage("img/playerSpriteShoot.png"),
                 cropWidth: 312,
                 height: 206,
             }
@@ -113,7 +113,7 @@ class Projectiles{
     constructor(position , velocity , rotation) {
         this.width = 12;
         this.height = 3;
-        this.image = createImage("/img/projectile.png");
+        this.image = createImage("img/projectile.png");
         this.position = position;
         this.velocity = velocity;
         this.rotation = rotation;
@@ -149,7 +149,7 @@ class Projectiles{
 
 class Enemy{
     constructor(position, velocity , rotation) {
-        this.image = createImage("/img/zombieSpritewalk.png");
+        this.image = createImage("img/zombieSpritewalk.png");
         this.width = 85;
         this.height = 50;
         this.position = position
@@ -343,7 +343,7 @@ function animate() {
             (midY + 10) - enemy.cirY);
         if (dis - enemy.radius - 20 < 1) {
             if (!muted) {
-                const zombieEat = createAudio("/audio/zombieEat.mp3");
+                const zombieEat = createAudio("audio/zombieEat.mp3");
                 zombieEat.play();
                 backgroundSound.pause();
             }
