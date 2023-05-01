@@ -16,6 +16,7 @@ context = canvas.getContext("2d");
 const backgroundSound = createAudio("audio/backgroundSound.mp3");
 const shoot = createAudio("audio/shot-and-reload.mp3");
 const killingZombie = createAudio("audio/killed_zombie.mp3");
+const boomSound = createAudio("audio/boom.mp3");
 let muted = false;
 
 class Player {
@@ -150,8 +151,8 @@ class Projectiles{
 class Enemy{
     constructor(position, velocity , rotation) {
         this.image = createImage("img/zombieSpritewalk.png");
-        this.width = 85;
-        this.height = 50;
+        this.width = 85; // 85
+        this.height = 50; // 50
         this.position = position
         this.velocity = velocity;
         this.rotation = rotation;
@@ -422,6 +423,36 @@ canvas.addEventListener("click", (event) => {
     }
 });
 
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+
+    if(score >= 5000){
+        // Score
+        score += enemies.length * 100 - 5000;
+        scoreElements[0].innerHTML = score;
+
+        // Kill each enemies
+        enemies.forEach((enemy) => {
+            // Create Explosions
+            for (let i = 0; i < 15 ; i++){
+                particles.push(new Particle(
+                    enemy.position.x + enemy.width / 2,
+                    enemy.position.y + enemy.height / 2,
+                    Math.random() * 3, "red",
+                    {
+                        x: (Math.random() - 0.5) * 2,
+                        y: (Math.random() - 0.5) * 2,
+                    }
+                ));
+            }
+        });
+
+        enemies = [];
+        boomSound.play();
+        boomSound.volume = 0.2;
+    }
+});
+
 window.addEventListener("mousemove", (event) => {
     // Angle of " Start Point (Gun Position) to End Point (Mouse Direct) "
     /// Gun Position {x : midX+40 , y: midY+25}
@@ -446,3 +477,4 @@ soundmuted.addEventListener("click", () => {
     soundmuted.style.display = "none";
     soundPlay.style.display = "block";
 });
+
